@@ -1,7 +1,7 @@
 
-import xlrd
 import jdatetime
 import calendar
+import sqlite3
 
 #address=input('Enter file path :')
 line_count=0
@@ -10,16 +10,13 @@ d=dict()
 l2=list()
 address="list.xls"
 
-excel_reader=xlrd.open_workbook(address) 
-sheet = excel_reader.sheet_by_index(0) 
-sheet.cell_value(0, 0) 
-
-for i in range(2,sheet.nrows):
-    
-    row=sheet.row_values(i)
-    
+conn=sqlite3.connect("personel")
+curser=conn.cursor()
+curser.execute('SELECT * FROM main')
+rows=curser.fetchall()
+for row in rows:
     d[row[2]]=row[3]
-   
+    
 
 today=str(jdatetime.date.today()) 
 today_list=today.split('-')
@@ -37,7 +34,7 @@ print('^^^^^^^^^^^^^^^^^^^^^^^^^^')
 
 for i in d:
     name=i
-
+    
     date_list=d[i].split('/')
     
     if int(date_list[1]) == int(today_list[1]):
@@ -47,7 +44,7 @@ for i in d:
             age=int(today_list[0])-int(date_list[0])
             print("he/she is %s years old" % (age))
             print("*************************************")
-print('^^^^^^^^^^^^^^^^^^^^^^^^^^')
+print('______________________________________')
 print("In this week we have birthday of :")    
 
 for i in d:

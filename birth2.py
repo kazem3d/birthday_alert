@@ -9,9 +9,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import xlrd
+
 import jdatetime
 import calendar
+import sqlite3
 
 
 
@@ -21,15 +22,14 @@ d=dict()
 l2=list()
 address="list.xls"
 
-excel_reader=xlrd.open_workbook(address) 
-sheet = excel_reader.sheet_by_index(0) 
-sheet.cell_value(0, 0) 
-
-for i in range(2,sheet.nrows):
-    
-    row=sheet.row_values(i)
-    
+conn=sqlite3.connect("personel")
+curser=conn.cursor()
+curser.execute('SELECT * FROM main')
+rows=curser.fetchall()
+for row in rows:
     d[row[2]]=row[3]
+
+
         
 
 today=str(jdatetime.date.today()) 

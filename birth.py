@@ -46,7 +46,7 @@ for i in d:
             print("*************************************")
 print('______________________________________')
 print("In this week we have birthday of :")    
-
+no_birthday=False
 for i in d:
     name=i   
     date_list=d[i].split('/')            
@@ -54,3 +54,6 @@ for i in d:
         for i in this_week:
             if  int(date_list[2]) == i:   
                 print(name,d[name])  
+                no_birthday=True
+if no_birthday == False:
+    print('there is no one')

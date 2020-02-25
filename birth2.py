@@ -50,18 +50,15 @@ print('^^^^^^^^^^^^^^^^^^^^^^^^^^')
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(380, 265)
+        MainWindow.resize(328, 321)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(60, 10, 256, 192))
+        self.textBrowser.setGeometry(QtCore.QRect(30, 10, 256, 261))
         self.textBrowser.setObjectName("textBrowser")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(150, 220, 75, 23))
-        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 380, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 328, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -71,48 +68,57 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.pushButton.clicked.connect(self.printer)
         
-        self.textBrowser.append("^^^^^^^^^^^^^^^^^^^^^^^^^^")
-        self.textBrowser.append('تاریخ امروز : %s' %today)
-        self.textBrowser.append("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        
+        
+        self.textBrowser.append("              ")
+        self.textBrowser.append('                    تاریخ امروز : %s' %today)
+        self.textBrowser.append("              ")
+
+        self.printer()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "run"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "birthdayAlert"))
+        
 
     def printer(self):
+        self.textBrowser.append("                  *************************")
         for i in d:
             name=i
 
             date_list=d[i].split('/')
-
+            
             if int(date_list[1]) == int(today_list[1]):
                 if int(date_list[2]) == int(today_list[2])+1:
-                    self.textBrowser.append("ا*************************")
+                    
                     print("It's %s birthday" %name)
                     self.textBrowser.append("فردا تولد %s است" %name)
                     
                     age=int(today_list[0])-int(date_list[0])
                     print("he/she is %s years old" % (age))
                     self.textBrowser.append("او  %d ساله شده است" % age)
-                    print("*********")
-                    self.textBrowser.append("ا*************************")
+                    print("===============================")
+                    self.textBrowser.append("         ========================")
 
-        self.textBrowser.append('^^^^^^^^^^^^^^^^^^^^^^^^^^')
-        self.textBrowser.append("این هفته تولد افراد زیر است:")
+        #self.textBrowser.append('                ^^^^^^^^^^^^^^^^^^^^^^^^^^')
+        self.textBrowser.append("لیست متولدین این هفته :")
+        self.textBrowser.append('  ')
         print('^^^^^^^^^^^^^^^^^^^^^^^^^^')
         print("In this week we have birthday of :")    
-
+        no_birthday=False
         for i in d:
             name=i   
             date_list=d[i].split('/')            
             if int(date_list[1]) == int(today_list[1]):
                 for i in this_week:
                     if  int(date_list[2]) == i: 
-                        self.textBrowser.append(name)  
+                        self.textBrowser.append('%s  متولد : %s'  %(name , d[name]) )  
                         print(name,d[name])  
+                        no_birthday=True
+        if no_birthday == False:
+            print('there is no one') 
+            self.textBrowser.append('کسی وجود ندارد')
 
 
 if __name__ == "__main__":
